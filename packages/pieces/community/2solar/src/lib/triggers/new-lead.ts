@@ -1,10 +1,10 @@
 import { createTrigger, TriggerStrategy } from '@activepieces/pieces-framework';
 import axios from 'axios';
 
-async function fetchLeads() {
+async function fetchLeads(auth: { api_key: string }) {
   const response = await axios.get('https://app.2solar.nl/api/person/search/', {
     headers: {
-      'Authorization': 'Token c683f1cd03a4a19b6684154742b805c0d00dda4d',
+      'Authorization': `Token ${auth.api_key}`,
     },
     params: {
       limit: 100,
@@ -30,12 +30,12 @@ export const newLeadTrigger = createTrigger({
   props: {},
   sampleData: {},
 
-  async run() {
-    return await fetchLeads();
+  async run({ auth }) {
+    return await fetchLeads(auth);
   },
 
-  async test() {
-    return await fetchLeads();
+  async test({ auth }) {
+    return await fetchLeads(auth);
   },
 
   onEnable: async () => {},

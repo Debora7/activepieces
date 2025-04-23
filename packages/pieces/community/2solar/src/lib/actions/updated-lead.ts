@@ -33,13 +33,14 @@ export const updateLeadAction = createAction({
       required: false,
     }),
   },
-  async run({ propsValue }) {
+
+  async run({ propsValue, auth }) {
     const { request_id, call_date, call_time, call_duration, conversation_summary, notes } = propsValue;
 
     if (!isNaN(Number(request_id))) {
       throw new Error('Request ID must NOT be a number.');
     }
-    
+
     const body: Record<string, unknown> = {};
 
     if (call_date || call_time) {
@@ -60,7 +61,7 @@ export const updateLeadAction = createAction({
       body,
       {
         headers: {
-          'Authorization': 'Token c683f1cd03a4a19b6684154742b805c0d00dda4d',
+          'Authorization': `Token ${auth.api_key}`,
         },
       }
     );
@@ -68,12 +69,12 @@ export const updateLeadAction = createAction({
     return response.data;
   },
 
-  async test({ propsValue }) {
+  async test({ propsValue, auth }) {
     const response = await axios.get(
       `https://app.2solar.nl/api/person/${propsValue.request_id}`,
       {
         headers: {
-          'Authorization': 'Token c683f1cd03a4a19b6684154742b805c0d00dda4d',
+          'Authorization': `Token ${auth.api_key}`,
         },
       }
     );
