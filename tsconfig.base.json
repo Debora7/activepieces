@@ -21,6 +21,9 @@
       "@activepieces/ee-shared": ["packages/ee/shared/src/index.ts"],
       "@activepieces/ee/billing/ui": ["packages/ee/billing/ui/src/index.ts"],
       "@activepieces/engine": ["packages/engine/src/main.ts"],
+      "@activepieces/piece-2solar": [
+        "packages/pieces/community/2solar/src/index.ts"
+      ],
       "@activepieces/piece-activecampaign": [
         "packages/pieces/community/activecampaign/src/index.ts"
       ],
@@ -739,6 +742,9 @@
       ],
       "@activepieces/piece-twitter": [
         "packages/pieces/community/twitter/src/index.ts"
+      ],
+      "@activepieces/piece-two-solar": [
+        "packages/pieces/community/two-solar/src/index.ts"
       ],
       "@activepieces/piece-typeform": [
         "packages/pieces/community/typeform/src/index.ts"

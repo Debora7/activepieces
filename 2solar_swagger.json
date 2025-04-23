@@ -1,0 +1,1870 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Person API",
+    "description": "With this endpoints you can manage the request in your system.",
+    "contact": {
+      "email": "support@2solar.nl"
+    },
+    "version": "1.0.5"
+  },
+  "servers": [
+    {
+      "url": "https://app.2solar.nl/api",
+      "description": "Production endpoint (Warning! This will effect your real data)"
+    }
+  ],
+  "paths": {
+    "/person/{request_id}/": {
+      "get": {
+        "summary": "Get one or all requests",
+        "description": "Get search everything or a specific ID or just get a list of all requests. This is a really old endpoint that didn't support status codes, so most messages will be under the 200 status code.",
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "description": "Pass the request ID that you want to search or fill in \"search\" to look for everything.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "default": "search"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Fill in on what you want to search on. You can search on the following fields: first name, last name, company name, phone number, mobile number, email, address, city, zip code, and reference number",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "request_client_status_id",
+            "in": "query",
+            "description": "search on current status ID.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "original_client_status_id",
+            "in": "query",
+            "description": "search on source ID.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "date_created_from",
+            "in": "query",
+            "description": "The date you want to start searching from based on the date of creation.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "date_created_until",
+            "in": "query",
+            "description": "The date you want to searching until based on the date of creation.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "date_edited_from",
+            "in": "query",
+            "description": "The date you want to start searching from based on the date of last time edited.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "date_edited_until",
+            "in": "query",
+            "description": "The date you want to searching until based on the date of last time edited.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "updated_from",
+            "in": "query",
+            "description": "The date you want to start searching from based on the last updated date, this search is more accurate. (max. period of 48 hours)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "example": "2022-10-12 12:34:00",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "updated_to",
+            "in": "query",
+            "description": "The date you want to end searching from based on the last updated date, this search is more accurate. (max. period of 48 hours)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "example": "2022-10-14 12:34:00",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "has_account_manager",
+            "in": "query",
+            "description": "Filters leads that do or don't have an account manager (current_user_id)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "example": "false",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "installation_date",
+            "in": "query",
+            "description": "The date and time of the installation",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "example": "2022-10-14 12:34:00",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "amount of offset (can start at 0), in combination with the limit key",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Set a limit to the response (max: 300), in combination with the offset key",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All fields that where updated and which value and a success message.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200"
+                },
+                "examples": {
+                  "PersonGetResults": {
+                    "value": {
+                      "564078": {
+                        "request_client_status_id": "51720",
+                        "original_client_status_id": "51699",
+                        "original_status": "lead",
+                        "person_id": "564377",
+                        "request_id": "564078",
+                        "request_date": "2019-11-15 17:07:17",
+                        "request_edited": "2020-04-02 16:15:51",
+                        "request_status": "geinstalleerd",
+                        "request_type_id": 3,
+                        "request_type_name": "Zonnepanelen",
+                        "current_user_id": "5127",
+                        "current_user_name": "Accountmanager 1",
+                        "reference_number": "",
+                        "reference_number_2": "",
+                        "reference_number_3": "",
+                        "company_name": "Heel groot bedrijfje",
+                        "gender": "m",
+                        "initials": "",
+                        "first_name": "Jane",
+                        "infix": "",
+                        "last_name": "Doe",
+                        "address": "Burgemeester van Roijensingel",
+                        "number": "19",
+                        "postcode": "8011CT",
+                        "city": "Zwolle",
+                        "province": "Overijssel",
+                        "country": "",
+                        "building_project": "no",
+                        "longitude": "6.0946982",
+                        "latitude": "52.50892443",
+                        "telephone": "+31384250900",
+                        "mobile": "+31612345678",
+                        "email": "info@2solar.nl",
+                        "comments": "test",
+                        "jaarlijks_verbruik": "",
+                        "installation_date": "2021-12-12 00:00:00",
+                        "extra_fields": {
+                          "custom_fields": "Specific per account"
+                        },
+                        "number_addition": "",
+                        "monitoring": {
+                          "inverter_brand": "solaredge",
+                          "inverter_key": "1234567",
+                          "active": true
+                        },
+                        "person_product_types": [
+                          "solar_panel",
+                          "airco"
+                        ]
+                      },
+                      "564080": {
+                        "lead_group_id": "0",
+                        "request_client_status_id": "51720",
+                        "original_client_status_id": "51699",
+                        "original_status": "lead",
+                        "request_id": "564080",
+                        "request_date": "2019-11-18 17:02:48",
+                        "request_edited": "2020-04-08 11:57:33",
+                        "request_status": "geinstalleerd",
+                        "request_type_id": 2,
+                        "current_user_id": "5127",
+                        "current_user_name": "Accountmanager 1",
+                        "reference_number": "",
+                        "reference_number_2": "",
+                        "reference_number_3": "",
+                        "company_name": "",
+                        "gender": "u",
+                        "initials": "",
+                        "first_name": "John",
+                        "infix": "",
+                        "last_name": "Doe",
+                        "address": "Burgemeester van Roijensingel",
+                        "number": "19",
+                        "postcode": "8011CT",
+                        "city": "Zwolle",
+                        "province": "Overijssel",
+                        "country": "",
+                        "building_project": "no",
+                        "longitude": "6.0946982",
+                        "latitude": "52.50892443",
+                        "telephone": "+31384250900",
+                        "mobile": "+31612345678",
+                        "email": "info@2solar.nl",
+                        "comments": "",
+                        "jaarlijks_verbruik": "",
+                        "inspection_date": "2020-12-12 00:00:00",
+                        "installation_date": "2021-12-12 00:00:00",
+                        "extra_fields": {
+                          "custom_fields": "Specific per account"
+                        },
+                        "number_addition": "c",
+                        "person_product_types": [
+                          "charge_station",
+                          "energy_contract"
+                        ]
+                      }
+                    }
+                  },
+                  "PersonGetNotFound": {
+                    "value": {
+                      "error": "Nothing found"
+                    }
+                  },
+                  "PersonGetNoPersonId": {
+                    "value": {
+                      "error": "Not valid params. No PersonID found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests. This happens when the rate limit is exceeded. The rate limit is 100 requests per minute or 2000 requests per hour, per api key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequestsError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An error has occurred, please take contact with us.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FiveHundredError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/person": {
+      "post": {
+        "summary": "Create a new request",
+        "description": "Create a new request with the data provided.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonPost"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/person_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns a success message as well as the ID of the just created record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonPostResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "This error is shown when to postcode or number is given.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonPostNoPostcodeAndNumber"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid postcode and number combination.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidCombination"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests. This happens when the rate limit is exceeded. The rate limit is 100 requests per minute or 2000 requests per hour, per api key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequestsError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An error has occurred, please take contact with us.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FiveHundredError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/person/{request_id}": {
+      "put": {
+        "summary": "Update a request",
+        "description": "With the given values you can update the lead in your system.\n",
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "description": "Pass the request ID that you want to update",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Change the data for the given fields",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonPut"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/person_request_id_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "All fields that where updated and which value and a success message.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonPutSuccess"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Nothing found for this request ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonPutNoRequestFound"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_422"
+                },
+                "examples": {
+                  "PersonPutNoIdGiven": {
+                    "summary": "No request found for the given ID",
+                    "value": {
+                      "request_id": 12345,
+                      "error": "No ID given"
+                    }
+                  },
+                  "PersonPutNoData": {
+                    "summary": "No data found",
+                    "value": {
+                      "request_id": 12345,
+                      "error": "No data found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests. This happens when the rate limit is exceeded. The rate limit is 100 requests per minute or 2000 requests per hour, per api key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequestsError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An error has occurred, please take contact with us.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FiveHundredPutError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v2/persons/{person_id}": {
+      "get": {
+        "summary": "Retrieve a person",
+        "description": "Get a person and its data by the given {person_id}.",
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "description": "Pass an ID of the person you want to retrieve.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Person data along with a list of requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ResourcePersonV2"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "OK"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid person ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Person with the given ID was not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PersonGetResults": {
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "$ref": "#/components/schemas/PersonGetResults_request_id"
+          }
+        }
+      },
+      "PersonGetNotFound": {
+        "required": [
+          "error"
+        ],
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Nothing found"
+          }
+        }
+      },
+      "PersonGetNoPersonId": {
+        "required": [
+          "error"
+        ],
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Not valid params. No PersonID found"
+          }
+        }
+      },
+      "PersonPost": {
+        "required": [
+          "number",
+          "postcode"
+        ],
+        "type": "object",
+        "properties": {
+          "skip_postcode_check": {
+            "type": "boolean",
+            "description": "If this option is given and set to true, the postcode and number check will be skipped.",
+            "default": false
+          },
+          "match_person_on_address": {
+            "type": "boolean",
+            "description": "If this option is given and set to true, persons wont be created when they are already in the system.",
+            "default": false
+          },
+          "postcode": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "number": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "number_ext": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "latitude": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "Example: 52.50248462"
+          },
+          "longitude": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "Example: 6.08249599"
+          },
+          "language": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "List of available languages: nl, en, de, es (could be this list is outdated, it will return an error with the most recent list of available languages when a other value is given)"
+          },
+          "client_status_id": {
+            "type": "integer",
+            "maxLength": 11,
+            "description": "Ask for the available options. This will be the source of the lead."
+          },
+          "second_client_status_id": {
+            "type": "integer",
+            "maxLength": 11,
+            "description": "Ask for the available options. This will be the current status of the lead."
+          },
+          "second_client_status_id_message": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "A description to the status update of the second_client_status_id"
+          },
+          "parent_person_id": {
+            "type": "integer",
+            "maxLength": 11,
+            "description": "Ask for the available options. This will be the id of the company the person belongs to."
+          },
+          "gender": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "options: U = unknown, M = male, F = female, G = group/family"
+          },
+          "initials": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "first_name": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "infix": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "last_name": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "company_name": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "street": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "city": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "country": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "options: Netherlands, Belgium, Germany, Spain"
+          },
+          "project_address": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "Enter if the person's address does not match the project location"
+          },
+          "project_zip_code": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "Enter if the person's address does not match the project location"
+          },
+          "project_number": {
+            "type": "string",
+            "maxLength": 11,
+            "description": "Enter if the person's address does not match the project location"
+          },
+          "project_city": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "Enter if the person's address does not match the project location"
+          },
+          "project_lat": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "Example: 52.50248462"
+          },
+          "project_lon": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "Example: 6.08249599"
+          },
+          "comments": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "telephone": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "mobile": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "jaarlijks_verbruik": {
+            "type": "integer",
+            "maxLength": 11,
+            "description": "Yearly consumption in kWh"
+          },
+          "aantal_panelen": {
+            "type": "integer",
+            "maxLength": 11,
+            "description": "Requested amount of panels"
+          },
+          "reference_number": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "reference_number_2": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "reference_number_3": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "request_type": {
+            "type": "integer",
+            "maxLength": 11,
+            "description": "The id of the request type (a.k.a. lead type)"
+          },
+          "building_project": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "options: yes or no"
+          },
+          "source_site": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "website.nl"
+          },
+          "source_site_url": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "/formulier1.html"
+          },
+          "installation_date": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "The date and time of the installation"
+          },
+          "images": {
+            "type": "string",
+            "description": "Full url's to the images as a string separated by a comma. jpg, jpeg, and png supported."
+          },
+          "ra_fields": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "All fields starting with \"ra_\" will be seen as custom fields, ask us for all options available for your account."
+          },
+          "product_type": {
+            "type": "string",
+            "enum": [
+              "solar_panel",
+              "heat_pump",
+              "airco",
+              "battery",
+              "charge_station",
+              "fuse_box",
+              "service",
+              "energy_contract"
+            ],
+            "description": "Pass one of the specified values to create a lead with a type connected to the passed product type."
+          },
+          "person_product_types": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "solar_panel",
+                "heat_pump",
+                "airco",
+                "battery",
+                "charge_station",
+                "fuse_box",
+                "service",
+                "energy_contract"
+              ]
+            },
+            "description": "The list of product types a new person is interested in."
+          },
+          "person_product_types_string": {
+            "type": "string",
+            "description": "The comma separated list of product types a new person is interested in. (options: solar_panel, heat_pump, airco, battery, charge_station, fuse_box, service, energy_contract)"
+          }
+        },
+        "example": {
+          "skip_postcode_check": false,
+          "match_person_on_address": false,
+          "postcode": "string",
+          "number": "string",
+          "number_ext": "string",
+          "latitude": "string",
+          "longitude": "string",
+          "language": "string",
+          "client_status_id": 0,
+          "second_client_status_id": 0,
+          "parent_person_id": 0,
+          "gender": "string",
+          "initials": "string",
+          "first_name": "string",
+          "infix": "string",
+          "last_name": "string",
+          "email": "string",
+          "company_name": "string",
+          "street": "string",
+          "city": "string",
+          "country": "string",
+          "project_address": "string",
+          "project_zip_code": "string",
+          "project_number": "string",
+          "project_city": "string",
+          "project_lat": "string",
+          "project_lon": "string",
+          "comments": "string",
+          "telephone": "string",
+          "mobile": "string",
+          "jaarlijks_verbruik": 0,
+          "aantal_panelen": 0,
+          "reference_number": "string",
+          "reference_number_2": "string",
+          "reference_number_3": "string",
+          "request_type": 0,
+          "building_project": "string",
+          "source_site": "string",
+          "source_site_url": "string",
+          "installation_date": "string",
+          "images": "https://www.example.com/image1.jpg,https://www.example.com/image2.jpeg",
+          "ra_fields": "string",
+          "product_type": "solar_panel",
+          "person_product_types": [
+            "heat_pump",
+            "charge_station"
+          ],
+          "person_product_types_string": "heat_pump, charge_station"
+        }
+      },
+      "PersonPostResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "string",
+            "example": "Person saved"
+          },
+          "request_id": {
+            "type": "integer"
+          },
+          "person_id": {
+            "type": "integer"
+          }
+        }
+      },
+      "PersonPostNoPostcodeAndNumber": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "No postcode and number"
+          }
+        }
+      },
+      "InvalidCombination": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Combination does not exist."
+          }
+        }
+      },
+      "PersonPut": {
+        "required": [
+          "field_name"
+        ],
+        "type": "object",
+        "properties": {
+          "field_name": {
+            "type": "string"
+          },
+          "images": {
+            "type": "string",
+            "description": "Full url's to the images as a string separated by a comma. jpg, jpeg, and png supported."
+          },
+          "custom_fields": {
+            "type": "object",
+            "description": "This are custom fields. Ask us what custom fields are available for your account."
+          },
+          "person_product_types": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "solar_panel",
+                "heat_pump",
+                "airco",
+                "battery",
+                "charge_station",
+                "fuse_box",
+                "service",
+                "energy_contract"
+              ]
+            },
+            "description": "The list of product types the person is interested in."
+          },
+          "person_product_types_string": {
+            "type": "string",
+            "description": "The comma separated list of product types a new person is interested in. (options: solar_panel, heat_pump, airco, battery, charge_station, fuse_box, service, energy_contract)"
+          }
+        },
+        "example": {
+          "lead_group_id": "integer",
+          "client_status_id": "integer",
+          "original_client_status_id": "integer",
+          "parent_person_id": "integer",
+          "priority": "enum('low', 'normal', 'high', 'special')",
+          "inspection_date": "timestamp('Y-m-d H:i:s')",
+          "indication_installation_date": "date('Y-m-d')",
+          "installation_duration": "integer",
+          "installation_date": "timestamp('Y-m-d H:i:s')",
+          "yearly_usage": "string",
+          "panel_amount": "string",
+          "date_time_order": "date('Y-m-d')",
+          "date_time_action": "date('Y-m-d')",
+          "building_project": "enum('no', 'yes')",
+          "reference_number": "string",
+          "reference_number_2": "string",
+          "reference_number_3": "string",
+          "gender": "enum('m','f','u','g')",
+          "initials": "string",
+          "first_name": "string",
+          "infix": "string",
+          "last_name": "string",
+          "company_name": "string",
+          "profession": "string",
+          "address": "string",
+          "zip_code": "string",
+          "number": "string",
+          "city": "string",
+          "project_address": "string",
+          "project_zip_code": "string",
+          "project_number": "string",
+          "project_city": "string",
+          "country": "string",
+          "provincia": "string",
+          "email": "string('email')",
+          "bank_account_number": "string('IBAN')",
+          "ascription": "string",
+          "telephone": "string",
+          "mobile": "string",
+          "comments": "text",
+          "longitude": "string",
+          "latitude": "string",
+          "images": " https://www.example.com/image1.jpg,https://www.example.com/image2.jpeg",
+          "custom_fields": {
+            "field_name": "string"
+          },
+          "person_product_types": [
+            "airco",
+            "energy_contract"
+          ],
+          "person_product_types_string": "airco, energy_contract"
+        }
+      },
+      "PersonPutSuccess": {
+        "required": [
+          "allowed_fields",
+          "not_updated",
+          "request_id",
+          "success",
+          "updated"
+        ],
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "integer",
+            "maxLength": 11,
+            "format": "integer",
+            "example": 12345
+          },
+          "allowed_fields": {
+            "type": "object",
+            "example": {
+              "0": "gender",
+              "1": "initials",
+              "2": "person_product_types",
+              "...": "many more options",
+              "custom_fields": {
+                "0": "field name",
+                "...": "This are custom fields. Ask us what custom fields are available for your account."
+              }
+            }
+          },
+          "success": {
+            "type": "string",
+            "format": "string",
+            "example": "Successfully updated"
+          },
+          "updated": {
+            "$ref": "#/components/schemas/PersonPutSuccess_updated"
+          },
+          "not_updated": {
+            "$ref": "#/components/schemas/PersonPutSuccess_not_updated"
+          }
+        }
+      },
+      "PersonPutNoRequestFound": {
+        "required": [
+          "allowed_fields",
+          "error",
+          "request_id"
+        ],
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "integer",
+            "format": "integer",
+            "example": 12345,
+            "maxLength": 11
+          },
+          "error": {
+            "type": "string",
+            "format": "string",
+            "example": "Nothing found for this request ID."
+          },
+          "allowed_fields": {
+            "type": "object",
+            "example": {
+              "0": "gender",
+              "1": "initials",
+              "...": "many more options",
+              "custom_fields": {
+                "0": "field name",
+                "...": "This are custom fields. Ask us what custom fields are available for your account."
+              }
+            }
+          }
+        }
+      },
+      "PersonPutNoIdGiven": {
+        "required": [
+          "allowed_fields",
+          "error",
+          "request_id"
+        ],
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "integer",
+            "format": "integer",
+            "example": 12345,
+            "maxLength": 11
+          },
+          "error": {
+            "type": "string",
+            "format": "string",
+            "example": "No ID given"
+          },
+          "allowed_fields": {
+            "type": "object",
+            "example": {
+              "0": "gender",
+              "1": "initials",
+              "...": "many more options",
+              "custom_fields": {
+                "0": "field name",
+                "...": "This are custom fields. Ask us what custom fields are available for your account."
+              }
+            }
+          }
+        }
+      },
+      "PersonPutNoData": {
+        "required": [
+          "allowed_fields",
+          "error",
+          "request_id"
+        ],
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "integer",
+            "format": "integer",
+            "example": 12345,
+            "maxLength": 11
+          },
+          "error": {
+            "type": "string",
+            "format": "string",
+            "example": "No data found"
+          },
+          "allowed_fields": {
+            "type": "object",
+            "example": {
+              "0": "gender",
+              "1": "initials",
+              "...": "many more options",
+              "custom_fields": {
+                "0": "field name",
+                "...": "This are custom fields. Ask us what custom fields are available for your account."
+              }
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "required": [
+          "error"
+        ],
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "format": "string",
+            "example": "Unauthorized"
+          }
+        }
+      },
+      "FiveHundredError": {
+        "required": [
+          "error"
+        ],
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "An error has occurred"
+          }
+        }
+      },
+      "TooManyRequestsError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Too Many Requests: Rate limit exceeded"
+          },
+          "retry_after": {
+            "type": "string",
+            "example": "2020-04-02T16:15:51+00:00"
+          }
+        }
+      },
+      "FiveHundredPutError": {
+        "required": [
+          "error",
+          "request_id"
+        ],
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "integer",
+            "format": "integer",
+            "example": 12345
+          },
+          "error": {
+            "type": "string",
+            "format": "string",
+            "example": "An error has occurred"
+          },
+          "allowed_fields": {
+            "type": "object",
+            "example": {
+              "0": "gender",
+              "1": "initials",
+              "...": "many more options",
+              "custom_fields": {
+                "0": "field name",
+                "...": "This are custom fields. Ask us what custom fields are available for you're account."
+              }
+            }
+          }
+        }
+      },
+      "inline_response_200": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/PersonGetResults"
+          },
+          {
+            "$ref": "#/components/schemas/PersonGetNotFound"
+          },
+          {
+            "$ref": "#/components/schemas/PersonGetNoPersonId"
+          }
+        ]
+      },
+      "person_body": {
+        "type": "object",
+        "properties": {
+          "payload": {
+            "$ref": "#/components/schemas/PersonPost"
+          }
+        }
+      },
+      "person_request_id_body": {
+        "type": "object",
+        "properties": {
+          "payload": {
+            "$ref": "#/components/schemas/PersonPut"
+          }
+        }
+      },
+      "inline_response_422": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/PersonPutNoIdGiven"
+          },
+          {
+            "$ref": "#/components/schemas/PersonPutNoData"
+          }
+        ]
+      },
+      "PersonGetResults_request_id_extra_fields": {
+        "type": "object",
+        "properties": {
+          "custom_fields": {
+            "type": "string"
+          }
+        }
+      },
+      "PersonGetResults_request_id": {
+        "type": "object",
+        "properties": {
+          "lead_group_id": {
+            "type": "integer",
+            "maxLength": 11
+          },
+          "request_client_status_id": {
+            "type": "integer",
+            "maxLength": 11
+          },
+          "original_client_status_id": {
+            "type": "integer",
+            "maxLength": 11
+          },
+          "original_status": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "request_id": {
+            "type": "integer",
+            "maxLength": 11
+          },
+          "request_date": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "request_edited": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "request_status": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "request_type_id": {
+            "type": "integer",
+            "maxLength": 11
+          },
+          "request_type_name": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "current_user_id": {
+            "type": "integer",
+            "maxLength": 11
+          },
+          "current_user_name": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "reference_number": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "reference_number_2": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "reference_number_3": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "bank_account_number": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "ascription": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "company_name": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "gender": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "initials": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "first_name": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "infix": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "last_name": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "address": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "number": {
+            "type": "integer",
+            "maxLength": 11
+          },
+          "postcode": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "city": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "province": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "country": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "building_project": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "longitude": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "latitude": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "telephone": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "mobile": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "comments": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "jaarlijks_verbruik": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "inspection_date": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "installation_date": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "extra_fields": {
+            "$ref": "#/components/schemas/PersonGetResults_request_id_extra_fields"
+          },
+          "number_addition": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "person_product_types": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "solar_panel",
+                "heat_pump",
+                "airco",
+                "battery",
+                "charge_station",
+                "fuse_box",
+                "service",
+                "energy_contract"
+              ]
+            },
+            "description": "The list of product types the person is interested in."
+          }
+        },
+        "example": {
+          "person_product_types": [
+            "charge_station",
+            "service"
+          ]
+        }
+      },
+      "PersonPutSuccess_updated": {
+        "type": "object",
+        "properties": {
+          "field_name": {
+            "type": "string",
+            "format": "string",
+            "example": "stored value",
+            "maxLength": 255
+          }
+        },
+        "description": "This will show you all the fields that are updated.",
+        "example": "{\"first_name\":\"John\",\"last_name\":\"Doe\",\"custom_fields\":{\"field_name\":\"custom value\"},\"person_product_types\":[\"airco\",\"energy_contract\"]}"
+      },
+      "PersonPutSuccess_not_updated": {
+        "type": "object",
+        "properties": {
+          "field_name": {
+            "type": "string",
+            "format": "string",
+            "example": "not stored value"
+          }
+        },
+        "description": "Fields in this list can not be updated with this API key, can be that they are wrong or that this API key doesn't have access.",
+        "example": "{\"not_existing_field\":\"Value that was not stored\",\"not_allowed_field\":\"Value that was not stored\",\"custom_fields\":{\"field_name\":\"custom value\"}}"
+      },
+      "ResourcePersonV2": {
+        "type": "object",
+        "properties": {
+          "person_id": {
+            "type": "integer"
+          },
+          "client_id": {
+            "type": "integer"
+          },
+          "person_type_id": {
+            "type": "integer"
+          },
+          "parent_person_id": {
+            "type": "integer"
+          },
+          "language": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string"
+          },
+          "initials": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "infix": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "company_name": {
+            "type": "string"
+          },
+          "profession": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string",
+            "nullable": true
+          },
+          "number_addition": {
+            "type": "string",
+            "nullable": true
+          },
+          "postcode": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "province": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "longitude": {
+            "type": "string",
+            "description": "Example: 5.3421169"
+          },
+          "latitude": {
+            "type": "string",
+            "description": "Example: 50.5715529"
+          },
+          "telephone": {
+            "type": "string"
+          },
+          "mobile": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "comments": {
+            "type": "string"
+          },
+          "bank_account_number": {
+            "type": "string",
+            "nullable": true
+          },
+          "ascription": {
+            "type": "string",
+            "nullable": true
+          },
+          "product_types": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "solar_panel",
+                "heat_pump",
+                "airco",
+                "battery",
+                "charge_station",
+                "fuse_box",
+                "service",
+                "energy_contract"
+              ]
+            },
+            "description": "The list of product types the person is interested in."
+          },
+          "requests": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/components/schemas/ResourcePersonV2Request"
+            }
+          }
+        },
+        "example": {
+          "person_id": "175018",
+          "client_id": "2904",
+          "person_type_id": "158",
+          "parent_person_id": "0",
+          "language": "en",
+          "gender": "m",
+          "initials": "",
+          "first_name": "John",
+          "infix": "",
+          "last_name": "Wick",
+          "company_name": "",
+          "profession": null,
+          "address": "Vijverlaan",
+          "number": "54",
+          "number_addition": null,
+          "postcode": "6003 BC",
+          "city": "Brunssum",
+          "province": "Limburg",
+          "country": "Netherlands",
+          "longitude": "5.3421169",
+          "latitude": "50.5715529",
+          "telephone": "",
+          "mobile": "",
+          "email": null,
+          "comments": "",
+          "bank_account_number": null,
+          "ascription": null,
+          "product_types": [
+            "charge_station",
+            "service"
+          ],
+          "requests": [
+            {
+              "building_project": "no",
+              "lead_group_id": null,
+              "request_client_status_id": "4512",
+              "original_client_status_id": "7623",
+              "person_id": "175018",
+              "request_id": "163794",
+              "request_date": "2021-04-19 21:21:53",
+              "request_edited": "2021-04-27 16:47:59",
+              "request_updated": "2022-02-04 12:05:42",
+              "request_type_id": "214",
+              "current_user_id": "14220",
+              "reference_number": null,
+              "reference_number_2": null,
+              "reference_number_3": null,
+              "jaarlijks_verbruik": null,
+              "inspection_date": null,
+              "indication_installation_date": null,
+              "installation_duration": null,
+              "installation_date": null,
+              "client_id": "2904",
+              "request_type_name": "Zonnepanelen",
+              "project_location_status": null,
+              "request_status": "status 2",
+              "original_status": "lead",
+              "current_user_name": "",
+              "extra_fields": {
+                "field_name": "field_value"
+              }
+            }
+          ]
+        }
+      },
+      "ResourcePersonV2Request": {
+        "type": "object",
+        "properties": {
+          "building_project": {
+            "type": "string"
+          },
+          "lead_group_id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "request_client_status_id": {
+            "type": "integer"
+          },
+          "original_client_status_id": {
+            "type": "integer"
+          },
+          "person_id": {
+            "type": "integer"
+          },
+          "request_id": {
+            "type": "integer"
+          },
+          "request_date": {
+            "type": "string"
+          },
+          "request_edited": {
+            "type": "string"
+          },
+          "request_updated": {
+            "type": "string"
+          },
+          "request_type_id": {
+            "type": "integer"
+          },
+          "current_user_id": {
+            "type": "integer"
+          },
+          "reference_number": {
+            "type": "string",
+            "nullable": true
+          },
+          "reference_number_2": {
+            "type": "string",
+            "nullable": true
+          },
+          "reference_number_3": {
+            "type": "string",
+            "nullable": true
+          },
+          "jaarlijks_verbruik": {
+            "type": "string",
+            "nullable": true
+          },
+          "inspection_date": {
+            "type": "string",
+            "nullable": true
+          },
+          "indication_installation_date": {
+            "type": "string",
+            "nullable": true
+          },
+          "installation_duration": {
+            "type": "string",
+            "nullable": true
+          },
+          "installation_date": {
+            "type": "string",
+            "nullable": true
+          },
+          "client_id": {
+            "type": "integer"
+          },
+          "request_type_name": {
+            "type": "string"
+          },
+          "project_location_status": {
+            "type": "string",
+            "nullable": true
+          },
+          "request_status": {
+            "type": "string"
+          },
+          "original_status": {
+            "type": "string"
+          },
+          "current_user_name": {
+            "type": "string"
+          },
+          "extra_fields": {
+            "type": "object",
+            "properties": {
+              "field_name": {
+                "type": "string"
+              }
+            }
+          },
+          "project_location": {
+            "oneOf": [
+              {
+                "type": "object",
+                "nullable": true,
+                "properties": {
+                  "address": {
+                    "type": "string"
+                  },
+                  "number": {
+                    "type": "string"
+                  },
+                  "number_addition": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "postcode": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "province": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "country": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "longitude": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "latitude": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

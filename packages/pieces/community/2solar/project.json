@@ -1,0 +1,45 @@
+{
+  "name": "pieces-2solar",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/pieces/community/2solar/src",
+  "projectType": "library",
+  "release": {
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "dist/{projectRoot}",
+        "currentVersionResolver": "git-tag"
+      }
+    }
+  },
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/packages/pieces/community/2solar",
+        "tsConfig": "packages/pieces/community/2solar/tsconfig.lib.json",
+        "packageJson": "packages/pieces/community/2solar/package.json",
+        "main": "packages/pieces/community/2solar/src/index.ts",
+        "assets": [
+          "packages/pieces/community/2solar/*.md"
+        ],
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "updateBuildableProjectDepsInPackageJson": true
+      }
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ]
+    }
+  }
+}
